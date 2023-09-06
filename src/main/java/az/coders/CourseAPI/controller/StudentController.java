@@ -37,9 +37,8 @@ public class StudentController {
     public ResponseEntity<String>editStudent(@PathVariable Integer id,@RequestBody Student student){
         return studentService.editStudentById(id,student);
     }
-
-
-
-
-
+@DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteStudent(@PathVariable Integer id){
+        return studentService.deleteStudentById(id);
+}
 }

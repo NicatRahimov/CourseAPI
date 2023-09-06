@@ -56,9 +56,17 @@ return new ResponseEntity<>("Succesful added", HttpStatus.CREATED);
             student1.setAge(student.getAge());
             student1.setAddress(student.getAddress());
             student1.setContactNumber(student.getContactNumber());
+            studentRepository.save(student1);
             return new ResponseEntity<>("Edited succesfully",HttpStatus.OK);
        }else throw new StudentNotFound("There is no student with id: "+id);
+    }
 
-
+    public ResponseEntity<String> deleteStudentById(Integer id) {
+        try{
+            studentRepository.deleteById(id);
+            return new ResponseEntity<>("Deleted successfully",HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>("There is no student with id: "+id,HttpStatus.BAD_REQUEST);
+        }
     }
 }

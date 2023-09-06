@@ -9,9 +9,9 @@ import java.util.List;
 @Table(name = "groups")
 @Data
 public class Group {
-    @ManyToMany(mappedBy = "groups",cascade = CascadeType.ALL)
-    List<Teacher>teachers;
-    @OneToMany(mappedBy = "group",cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "groups",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+     List<Teacher>teachers;
+    @OneToMany(mappedBy = "group",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     List<Student>students;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

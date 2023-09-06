@@ -10,7 +10,10 @@ import lombok.Data;
 @Table(name = "student")
 @Data
 public class Student {
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {
+     CascadeType.PERSIST,
+            CascadeType.MERGE
+    } )
     @JoinColumn(name = "group_id")
     @JsonIgnore
     private Group group;

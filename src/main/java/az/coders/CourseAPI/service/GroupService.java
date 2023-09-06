@@ -46,7 +46,7 @@ public class GroupService {
 
     public ResponseEntity<String> deleteGroupById(Integer id) {
         groupRepository.deleteById(id);
-        return new ResponseEntity<>("Deleted succesfully",HttpStatus.OK);
+        return new ResponseEntity<>("Deleted successfully",HttpStatus.OK);
     }
 
     public ResponseEntity<Group> getGroupById(Integer id) {
