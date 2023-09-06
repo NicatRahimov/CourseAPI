@@ -1,5 +1,6 @@
 package az.coders.CourseAPI.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class Teacher {
             name = "group_teacher",
             joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
+            @JsonIgnore
             List<Group>groups;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
