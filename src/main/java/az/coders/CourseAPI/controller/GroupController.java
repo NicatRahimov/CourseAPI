@@ -13,11 +13,11 @@ import java.util.List;
 public class GroupController {
     @Autowired
     GroupService groupService;
-    @GetMapping("{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Group>getGroupById(@PathVariable Integer id){
        return groupService.getGroupById(id);
     }
-    @GetMapping("/{groupName}")
+    @GetMapping("/name/{groupName}")
     public ResponseEntity<Group>getGroupByName(@PathVariable String groupName){
         return groupService.getGroupByGroupName(groupName);
     }

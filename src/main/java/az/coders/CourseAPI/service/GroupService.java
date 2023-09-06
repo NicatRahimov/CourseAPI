@@ -57,6 +57,6 @@ public class GroupService {
     }
 
     public ResponseEntity<Group> getGroupByGroupName(String groupName) {
-        return new ResponseEntity<>(groupRepository.findByGroupName(groupName),HttpStatus.OK);
+        return new ResponseEntity<>(groupRepository.findGroupByGroupName(groupName),HttpStatus.OK);
     }
 }

@@ -18,15 +18,27 @@ public class StudentController {
         return studentService.getStudents();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Student>getStudentById(@PathVariable Integer id){
         return studentService.getStudentById(id);
+    }
+
+    @GetMapping("/groupName/{groupName}")
+    public ResponseEntity<List<Student>> getStudentsByGroup(@PathVariable String groupName){
+       return studentService.getStudentsByGroupName(groupName );
     }
 
     @PostMapping("/register")
     public ResponseEntity<String> addStudent(@RequestBody Student student,@RequestParam String groupName){
        return studentService.addStudent(student,groupName);
     }
+
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<String>editStudent(@PathVariable Integer id,@RequestBody Student student){
+        return studentService.editStudentById(id,student);
+    }
+
+
 
 
 
