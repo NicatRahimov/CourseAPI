@@ -2,16 +2,22 @@ package az.coders.CourseAPI.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Entity
 @Table(name = "teacher")
 @Data
 public class Teacher {
-    @ManyToMany(mappedBy = "teachers")
-    List<Group> groups;
+    @ManyToMany
+    @JoinTable(
+            name = "group_teacher",
+            joinColumns = @JoinColumn(name = "teacher_id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+            List<Group>groups;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

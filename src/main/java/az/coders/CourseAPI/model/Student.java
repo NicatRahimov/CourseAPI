@@ -2,6 +2,7 @@ package az.coders.CourseAPI.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -9,9 +10,9 @@ import lombok.Data;
 @Table(name = "student")
 @Data
 public class Student {
-    @ManyToOne
-    @JoinColumn("group_id")
-    Group group;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "group_id")
+    private Group group;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
