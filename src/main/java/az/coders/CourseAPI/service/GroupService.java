@@ -1,5 +1,6 @@
 package az.coders.CourseAPI.service;
 
+import az.coders.CourseAPI.exception.GroupNotFound;
 import az.coders.CourseAPI.model.Group;
 import az.coders.CourseAPI.repository.GroupRepository;
 import az.coders.CourseAPI.repository.StudentRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroupService {
@@ -45,5 +47,16 @@ public class GroupService {
     public ResponseEntity<String> deleteGroupById(Integer id) {
         groupRepository.deleteById(id);
         return new ResponseEntity<>("Deleted succesfully",HttpStatus.OK);
+    }
+
+    public ResponseEntity<Group> getGroupById(Integer id) {
+        Optional<Group>groupOptional = groupRepository.findById(id);
+      if(groupOptional.isPresent()){
+          return new ResponseEntity<>(groupOptional.get(),HttpStatus.OK);
+      }else throw new GroupNotFound("No item with id: "+id);
+    }
+
+    public ResponseEntity<Group> getGroupByGroupName(String groupName) {
+        return new ResponseEntity<>(groupRepository.findByGroupName(groupName),HttpStatus.OK);
     }
 }

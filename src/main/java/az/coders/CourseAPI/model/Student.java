@@ -1,5 +1,6 @@
 package az.coders.CourseAPI.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -11,6 +12,7 @@ import lombok.Data;
 public class Student {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "group_id")
+    @JsonIgnore
     private Group group;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

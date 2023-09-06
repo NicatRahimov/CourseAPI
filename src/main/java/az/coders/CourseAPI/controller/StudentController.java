@@ -13,15 +13,19 @@ import java.util.List;
 public class StudentController {
     @Autowired
     StudentService studentService;
-
-    @PostMapping("/register")
-    public ResponseEntity<String> addStudent(@RequestBody Student student){
-       return studentService.addStudent(student);
-    }
-
     @GetMapping("allStudent")
     public ResponseEntity<List<Student>> getAllStudent(){
-       return studentService.getStudents();
+        return studentService.getStudents();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Student>getStudentById(@PathVariable Integer id){
+        return studentService.getStudentById(id);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> addStudent(@RequestBody Student student,@RequestParam String groupName){
+       return studentService.addStudent(student,groupName);
     }
 
 
