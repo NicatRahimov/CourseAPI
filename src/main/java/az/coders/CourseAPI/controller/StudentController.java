@@ -1,7 +1,6 @@
 package az.coders.CourseAPI.controller;
 
 import az.coders.CourseAPI.model.Student;
-import az.coders.CourseAPI.repository.StudentRepository;
 import az.coders.CourseAPI.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

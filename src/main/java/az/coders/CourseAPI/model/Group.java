@@ -3,7 +3,6 @@ package az.coders.CourseAPI.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.HashSet;
 import java.util.List;
 
 @Entity

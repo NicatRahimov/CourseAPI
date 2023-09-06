@@ -1,7 +1,6 @@
 package az.coders.CourseAPI.service;
 
 import az.coders.CourseAPI.model.Group;
-import az.coders.CourseAPI.model.Teacher;
 import az.coders.CourseAPI.repository.GroupRepository;
 import az.coders.CourseAPI.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Service
