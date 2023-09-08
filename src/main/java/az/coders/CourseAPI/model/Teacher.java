@@ -12,11 +12,11 @@ import java.util.List;
 @Data
 public class Teacher {
     @ManyToMany
+    @JsonIgnore
     @JoinTable(
             name = "group_teacher",
             joinColumns = @JoinColumn(name = "teacher_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
-            @JsonIgnore
             List<Group>groups;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

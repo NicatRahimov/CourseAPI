@@ -18,7 +18,8 @@ public class TeacherController {
        return teacherService.getAllTeacher();
      }
      @PostMapping("register")
-    public ResponseEntity<String>addTeacher(@RequestBody Teacher teacher){
-      return teacherService.addTeacherWGroupName(teacher);
+    public ResponseEntity<String>addTeacher(@RequestBody Teacher teacher,@RequestParam("groupIds") String groupIds){
+      return teacherService.addTeacher(teacher,groupIds);
      }
+
 }

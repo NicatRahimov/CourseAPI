@@ -6,7 +6,6 @@ import az.coders.CourseAPI.repository.GroupRepository;
 import az.coders.CourseAPI.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -23,15 +22,19 @@ public class TeacherService {
 return new ResponseEntity<>(teacherRepository.findAll(), HttpStatus.OK);
     }
 
-    public ResponseEntity<String> addTeacherWGroupName(Teacher teacher) {
-        List<Group> groups = teacher.getGroups();
-        List<Integer>ids= new ArrayList<>();
-        for (Group group :
-                groups) {
-            ids.add(group.getId());
+    public ResponseEntity<String> addTeacher(Teacher teacher,String groupIds) {
+        List<String>StIds=new ArrayList<>();
+        List<Group>groups=new ArrayList<>();
+        if (groupIds.contains(",")){
+           StIds.addAll(List.of(groupIds.split(",")));
+            for (String StId :
+                    StIds) {
+                Integer id = Integer.valueOf(StId);
+                groups.add(groupRepository.findById(id).get());
+            }}else{
+           groups.add(groupRepository.findById(Integer.valueOf(groupIds)).get());
         }
-           List<Group> groups1 = groupRepository.findAllById(ids);
-teacher.setGroups(groups1);
+        teacher.setGroups(groups);
         teacherRepository.save(teacher);
         return new ResponseEntity<>("Added successfully",HttpStatus.CREATED);
     }
