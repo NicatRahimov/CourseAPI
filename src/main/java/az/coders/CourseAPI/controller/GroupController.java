@@ -1,5 +1,6 @@
 package az.coders.CourseAPI.controller;
 
+import az.coders.CourseAPI.dto.GroupDTO;
 import az.coders.CourseAPI.model.Group;
 import az.coders.CourseAPI.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +15,15 @@ public class GroupController {
     @Autowired
     GroupService groupService;
     @GetMapping("/id/{id}")
-    public ResponseEntity<Group>getGroupById(@PathVariable Integer id){
+    public ResponseEntity<GroupDTO>getGroupById(@PathVariable Integer id){
        return groupService.getGroupById(id);
     }
     @GetMapping("/name/{groupName}")
-    public ResponseEntity<Group>getGroupByName(@PathVariable String groupName){
+    public ResponseEntity<GroupDTO>getGroupByName(@PathVariable String groupName){
         return groupService.getGroupByGroupName(groupName);
     }
     @GetMapping("/allGroup")
-    public ResponseEntity<List<Group>> getAllGroup() {
+    public ResponseEntity<List<GroupDTO>> getAllGroup() {
         return groupService.getAllGroups();
     }
     @PostMapping("/add")
