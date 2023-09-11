@@ -36,11 +36,7 @@ private final DTOMapper dtoMapper = DTOMapper.INSTANCE;
     }
 
     public ResponseEntity<List<GroupDTO>> getAllGroups() {
-        List<GroupDTO>groupDTOS=new ArrayList<>();
-        for (Group g :
-                groupRepository.findAll()) {
-            groupDTOS.add(dtoMapper.G_EntityToDto(g));
-        }
+        List<GroupDTO>groupDTOS=  dtoMapper.G_EntitiesToDto(groupRepository.findAll());
         return new ResponseEntity<>(groupDTOS,HttpStatus.OK);
     }
 

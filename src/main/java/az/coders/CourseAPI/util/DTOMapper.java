@@ -10,6 +10,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface DTOMapper {
     DTOMapper INSTANCE = Mappers.getMapper(DTOMapper.class);
@@ -28,6 +30,11 @@ public interface DTOMapper {
     @Mapping(target = "name",source = "name")
     @Mapping(target = "surname",source = "surname")
     @Mapping(target = "age",source = "age")
+    @Mapping(target = "groups",source = "groups")
     TeacherDTO T_EntityToDto(Teacher entity);
+
+    List<StudentDTO> S_EntitiesToDto (List<Student> students);
+    List<TeacherDTO> T_EntitiesToDto (List<Teacher> students);
+    List<GroupDTO> G_EntitiesToDto (List<Group> students);
 
 }

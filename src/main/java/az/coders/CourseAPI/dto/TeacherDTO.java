@@ -10,4 +10,5 @@ public class TeacherDTO {
     private String name;
     private String surname;
     private Integer age;
+    List<GroupDTO> groups;
 }

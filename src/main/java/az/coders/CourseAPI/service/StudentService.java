@@ -2,6 +2,7 @@ package az.coders.CourseAPI.service;
 
 import az.coders.CourseAPI.dto.GroupDTO;
 import az.coders.CourseAPI.dto.StudentDTO;
+import az.coders.CourseAPI.exception.GroupIsFull;
 import az.coders.CourseAPI.exception.StudentNotFound;
 import az.coders.CourseAPI.model.Group;
 import az.coders.CourseAPI.model.Student;
@@ -26,16 +27,9 @@ public class StudentService {
    private final DTOMapper dtoMapper = DTOMapper.INSTANCE;
 
     public ResponseEntity<List<StudentDTO>> getStudents() {
-        List<StudentDTO>studentDTOS = new ArrayList<>();
-        for (Student s:
-             studentRepository.findAll() ) {
-            studentDTOS.add(dtoMapper.S_EntityToDto(s));
-        }
-
+        List<StudentDTO>studentDTOS =  dtoMapper.S_EntitiesToDto(studentRepository.findAll());
         return new ResponseEntity<>(studentDTOS,HttpStatus.OK);
     }
-
-
     public ResponseEntity<StudentDTO> getStudentById(Integer id) {
         Optional<Student> studentOptional = studentRepository.findById(id);
         if (studentOptional.isPresent()){
@@ -54,9 +48,15 @@ public class StudentService {
         return new ResponseEntity<>(studentDTOS,HttpStatus.OK);
     }
     public ResponseEntity<String> addStudent(Student student,String groupName){
-        student.setGroup(groupRepository.findGroupByGroupName(groupName));
-studentRepository.save(student);
-return new ResponseEntity<>("Succesful added", HttpStatus.CREATED);
+        Group group = groupRepository.findGroupByGroupName(groupName);
+        int studentsCount = studentRepository.findStudentsByGroupId(group.getId()).size();
+        if (studentsCount<group.getCapacity()){
+            student.setGroup(group);
+            studentRepository.save(student);
+            return new ResponseEntity<>("Succesful added", HttpStatus.CREATED);
+        }else{
+            throw new GroupIsFull("Group is full for now.Please try again tomorrow");
+        }
     }
     public ResponseEntity<String> editStudentById(Integer id, Student student) {
        Optional<Student> studentOptional = studentRepository.findById(id);
