@@ -1,4 +1,4 @@
-package az.coders.CourseAPI.util;
+package az.coders.CourseAPI.config;
 
 import az.coders.CourseAPI.exception.GroupIsFull;
 import az.coders.CourseAPI.exception.GroupNotFound;

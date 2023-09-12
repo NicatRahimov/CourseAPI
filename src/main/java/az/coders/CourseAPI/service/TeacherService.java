@@ -85,15 +85,4 @@ return new ResponseEntity<>("Edited successfully",HttpStatus.OK);
             return new ResponseEntity<>("Deleted successfully",HttpStatus.OK);
         }else throw new TeacherNotFound("There is no teacher id: "+id);
     }
-
-//    public ResponseEntity<List<Teacher>> getTeachersByGroupName
-//            (List<String> groupName) {
-//        List<Group> groups = new ArrayList<>();
-//        for (String s :
-//                groupName) {
-//            groups.add(groupRepository.findGroupByGroupName(s));
-//        }
-//       List<Teacher>teachers = teacherRepository.findTeachersByGroups(groups);
-//        return new ResponseEntity<>(teachers,HttpStatus.OK);
-//    }
 }

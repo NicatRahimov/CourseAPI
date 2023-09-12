@@ -22,13 +22,6 @@ public class TeacherController {
      public ResponseEntity<TeacherDTO>getTeacherById(@PathVariable Integer id){
       return teacherService.getTeacherById(id);
      }
-
-//     @GetMapping("groupName")
-//     public ResponseEntity<List<Teacher>> getTeacherByGroupName
-//             (@RequestParam List<String> groupName){
-//        return teacherService.getTeachersByGroupName(groupName);
-//     }
-
      @PostMapping("register")
     public ResponseEntity<String>addTeacher(@RequestBody Teacher teacher,@RequestParam("groupId") List<Integer> groupIds){
       return teacherService.addTeacher(teacher,groupIds);

@@ -1,4 +1,4 @@
-package az.coders.CourseAPI.util;
+package az.coders.CourseAPI.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
