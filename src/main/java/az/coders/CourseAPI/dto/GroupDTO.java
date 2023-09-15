@@ -8,9 +8,9 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 @Data
-@AllArgsConstructor
 public class GroupDTO {
         private Integer id;
         private String groupName;
         private Integer capacity;
+        private Integer studentNumber;
 }

@@ -4,9 +4,10 @@ import az.coders.CourseAPI.dto.StudentDTO;
 import az.coders.CourseAPI.model.Student;
 import az.coders.CourseAPI.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class StudentController {
     }
     @PostMapping("/register")
     public ResponseEntity<String> addStudent(@RequestBody Student student,@RequestParam String groupName){
-       return studentService.addStudent(student,groupName);
+ return studentService.addStudent(student,groupName);
     }
 
     @PutMapping("/edit/{id}")

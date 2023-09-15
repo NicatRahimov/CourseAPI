@@ -6,7 +6,6 @@ import lombok.Data;
 
 import java.util.List;
 @Data
-@AllArgsConstructor
 public class TeacherDTO {
     private Integer id;
     private String name;

@@ -3,9 +3,11 @@ package az.coders.CourseAPI.service;
 import az.coders.CourseAPI.dto.GroupDTO;
 import az.coders.CourseAPI.exception.GroupNotFound;
 import az.coders.CourseAPI.model.Group;
+import az.coders.CourseAPI.model.Student;
 import az.coders.CourseAPI.repository.GroupRepository;
 import az.coders.CourseAPI.repository.StudentRepository;
 import az.coders.CourseAPI.util.DTOMapper;
+import jakarta.transaction.Transactional;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -36,21 +38,25 @@ private final DTOMapper dtoMapper = DTOMapper.INSTANCE;
     }
 
     public ResponseEntity<List<GroupDTO>> getAllGroups() {
-        List<GroupDTO>groupDTOS=  dtoMapper.G_EntitiesToDto(groupRepository.findAll());
+        List<Group> groupList = groupRepository.findAll();
+        List<GroupDTO>groupDTOS=  dtoMapper.G_EntitiesToDto(groupList);
         return new ResponseEntity<>(groupDTOS,HttpStatus.OK);
     }
 
     public ResponseEntity<GroupDTO> getGroupByGroupName(String groupName) {
-        GroupDTO groupDTO = dtoMapper.G_EntityToDto(groupRepository.findGroupByGroupName(groupName));
-        return new ResponseEntity<>(groupDTO,HttpStatus.OK);
+        Optional<Group> optionalGroup = groupRepository.findGroupByGroupName(groupName);
+        if (optionalGroup.isPresent()){
+            GroupDTO groupDTO = dtoMapper.G_EntityToDto(optionalGroup.get());
+            return new ResponseEntity<>(groupDTO,HttpStatus.OK);
+        }else throw new GroupNotFound("There is no group named with: "+groupName);
     }
-
+@Transactional
     public ResponseEntity<String> addGroup(Group group) {
         groupRepository.save(group);
         return new ResponseEntity<>("Succesful added", HttpStatus.CREATED);
     }
 
-
+    @Transactional
     public ResponseEntity<String> editGroupById(Group group,Integer id) {
         if (groupRepository.findById(id).isPresent()){
             Group group1 = groupRepository.findById(id).get();
@@ -64,6 +70,7 @@ private final DTOMapper dtoMapper = DTOMapper.INSTANCE;
             return new ResponseEntity<>("Edited succesfully",HttpStatus.OK);
         }else return new ResponseEntity<>("Nothing changed because you dont insert new data",HttpStatus.OK);
     }
+    @Transactional
 
     public ResponseEntity<String> deleteGroupById(Integer id) {
         groupRepository.deleteById(id);
