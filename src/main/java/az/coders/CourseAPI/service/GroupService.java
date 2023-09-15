@@ -12,6 +12,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class GroupService {
@@ -75,5 +77,13 @@ private final DTOMapper dtoMapper = DTOMapper.INSTANCE;
     public ResponseEntity<String> deleteGroupById(Integer id) {
         groupRepository.deleteById(id);
         return new ResponseEntity<>("Deleted successfully",HttpStatus.OK);
+    }
+
+    public Page<GroupDTO> getGroupPage(Integer pageSize, Integer pageNumber, String fieldName, String sortDirection) {
+        Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), fieldName);
+        Pageable pageable = PageRequest.of(pageNumber,pageSize,sort);
+        Page<Group> groupPage = groupRepository.findAll(pageable);
+        List<GroupDTO> groupDTOS = groupPage.stream().map(group -> dtoMapper.G_EntityToDto(group)).toList();
+        return new PageImpl<>(groupDTOS,pageable,groupPage.getTotalElements());
     }
 }
