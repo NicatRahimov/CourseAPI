@@ -1,11 +1,13 @@
 package az.coders.CourseAPI.util;
 
 import az.coders.CourseAPI.config.SecurityConfig;
+import az.coders.CourseAPI.model.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,32 +23,52 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    @Autowired
-    SecurityConfig securityConfig;
 
     @Value("${jwt.secret}")
     private static String SECRET_KEY;
 
-    @Value("${jwt.expirationdate}L")
+    @Value("${jwt.expirationdate}")
     private static Long EXPIRATION_DATE;
-    public String generateToken(UserDetails userDetails) {
+
+    private static String TOKEN_HEADER = "Authorization";
+
+    private static  String TOKEN_PREFIX ="Bearer ";
+
+
+    public String generateToken(UserEntity userEntity) {
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
+                .setSubject(userEntity.getUsername())
                 .setIssuer("Nicat")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_DATE))
                 .signWith(encoder(SECRET_KEY),SignatureAlgorithm.HS256)
                 .compact();
     }
+    public String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader(TOKEN_HEADER);
+        if (bearerToken != null && bearerToken.startsWith(TOKEN_PREFIX)) {
+            return bearerToken.substring(TOKEN_PREFIX.length());
+        }
+        return null;
+    }
 
-  public String validateToken(String token){
-
+  public Boolean validateToken(String token){
+      return token != null && !isExpired(token);
   }
 
 public String getUsernameToken(String token){
-    Claims claims = Jwts.parser().setSigningKey(encoder(SECRET_KEY)).parseClaimsJws(token).getBody();
+    Claims claims = getClaims(SECRET_KEY,token);
 return claims.getSubject();
 }
+
+private Boolean isExpired(String token){
+    return getClaims(SECRET_KEY,token).getExpiration().after(new Date());
+}
+private Claims getClaims(String secretKey,String token){
+   return Jwts.parser().setSigningKey(encoder(secretKey)).parseClaimsJws(token).getBody();
+}
+
+
 
 private Key encoder(String secretKey){
    return Keys.hmacShaKeyFor(secretKey.getBytes());

@@ -14,35 +14,10 @@ import java.util.Collection;
 @Data
 @Table(name = "user",schema = "public")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserEntity implements UserDetails {
+public class UserEntity  {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY  )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
     String username;
     String password;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
 }
